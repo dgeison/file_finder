@@ -1,0 +1,8 @@
+Nome         	Data de Criação           	Data de Modificação       	Localização
+finder.py    	30/12/2023 02:29:13:613328	30/12/2023 02:29:13:613328	/home/dgeison/projetos/file_finder/finder.py
+utils.py     	30/12/2023 02:08:35:493329	30/12/2023 02:08:35:493329	/home/dgeison/projetos/file_finder/utils.py
+exceptions.py	28/12/2023 21:39:15:219898	28/12/2023 21:39:15:219898	/home/dgeison/projetos/file_finder/exceptions.py
+i.py         	29/12/2023 19:20:21:169876	29/12/2023 19:20:21:169876	/home/dgeison/projetos/file_finder/ideia/i.py
+12.py        	29/12/2023 19:20:32:169877	29/12/2023 19:20:32:169877	/home/dgeison/projetos/file_finder/ideia/ideia2/12.py
+__init__.py  	27/12/2023 19:57:28:234421	27/12/2023 19:57:28:234421	/home/dgeison/projetos/file_finder/file_finder/__init__.py
+__init__.py  	27/12/2023 19:57:28:234421	27/12/2023 19:57:28:234421	/home/dgeison/projetos/file_finder/tests/__init__.py

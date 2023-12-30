@@ -1,0 +1,14 @@
+OBJETIVO:
+    - desenvolver um programa de interface texto capaz de localizar arquivos de acordo com os seguintes
+    requisitos
+
+REQUISITOS:
+   ✅- Dado um diretório, o programa deve poder:
+        ✅- procurar arquivos por nome
+        ✅- procurar arquivos por extensão
+        ✅- procurar arquivos por data de modificação
+
+   ✅- Para cada pesquisa, o programa deve oferecer opcoes de:
+        ✅- realizar a busca apenas no diretorio informado, ou tbm em todos os subdiretorios.
+        ✅- copiar os arquivos encontrados para um novo diretório informado 
+        ✅- gerar um relatorio: na tela e/ou num arquivo .txt
