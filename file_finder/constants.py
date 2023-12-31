@@ -1,6 +1,6 @@
-from utils import find_by_ext
-from utils import find_by_name
-from utils import find_by_mod
+from file_finder.utils import find_by_ext
+from file_finder.utils import find_by_name
+from file_finder.utils import find_by_mod
 
 SEARCH_MAPPING = {
     "name": find_by_name,

@@ -1,5 +1,6 @@
 from datetime import datetime
-from exceptions import FileFinderError
+from file_finder.exceptions import InvalidInputError
+import platform
 
 
 def get_folders(path):
@@ -62,7 +63,7 @@ def find_by_mod(path, value):
     try:
         datetime_obj = datetime.strptime(value, "%d/%m/%Y")
     except ValueError:
-        raise FileFinderError("A data informada é inválida!")
+        raise InvalidInputError(f"Data de modificação inválida: {value}")
 
     return [
         file
@@ -97,7 +98,7 @@ def get_files_details(files):
         stat = file.stat()
         details = [
             file.name,
-            timestamp_to_string(stat.st_ctime),
+            timestamp_to_string(get_created_timestamp(stat)),
             timestamp_to_string(stat.st_mtime),
             file.absolute(),
         ]
@@ -105,3 +106,9 @@ def get_files_details(files):
         files_details.append(details)
 
     return files_details
+
+def get_created_timestamp(stat):
+    if platform.system() == 'Darwin':
+        return 'st_birthtime'
+    
+    return 'st_ctime'

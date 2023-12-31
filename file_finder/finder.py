@@ -6,10 +6,11 @@ from pathlib import Path
 from datetime import datetime
 
 
-from utils import get_files_details
-from utils import get_folders
-from constants import SEARCH_MAPPING
-from constants import TABLE_HEADERS
+from file_finder.utils import get_files_details
+from file_finder.utils import get_folders
+from file_finder.constants import SEARCH_MAPPING
+from file_finder.constants import TABLE_HEADERS
+from file_finder.exceptions import FileFinderError, InvalidInputError, ZeroFilesFoundError
 
 
 def process_search(path, key, value, recursive):
@@ -45,7 +46,7 @@ def process_results(files, key, value):
     :return: A string que representa os resultados tabulados.
     """
     if not files:
-        click.echo(f"Nenhum arquivo com o {key} {value} foi encontrado.")
+        raise ZeroFilesFoundError(f"Nenhum arquivo com o {key} {value} foi encontrado.")
     else:
         table_data = get_files_details(files)
         tabulate_data = tabulate(
@@ -106,12 +107,14 @@ def copy_files(files, copy_to):
 @click.command()
 @click.argument("path", default="")
 @click.option(
-    "-k", "--key", required=True, type=click.Choice(list(SEARCH_MAPPING.keys()))
-)
-@click.option("-v", "--value", required=True)
-@click.option("-s", "--save", is_flag=True, default=False)
-@click.option("-r", "--recursive", is_flag=True, default=False)
-@click.option("-c", "--copy-to")
+    "-k",
+    "--key",
+    required=True,
+    type=click.Choice(list(SEARCH_MAPPING.keys())), help="Define a chave de busca")
+@click.option("-v", "--value", required=True, help="Define o valor para a chave")
+@click.option("-r", "--recursive", is_flag=True, default=False, help="Busca recursiva" )
+@click.option("-s", "--save", is_flag=True, default=False, help="Salva o resultado")
+@click.option("-c", "--copy-to", help="Copia os arquivos encontrados para um diretorio")
 def finder(path, key, value, recursive, copy_to, save):
     """
     Um programa que realiza busca de arquivos atraves de uma chave (-k|--key) a partir do diretorio PATH.
@@ -120,9 +123,11 @@ def finder(path, key, value, recursive, copy_to, save):
     root = Path(path)
 
     if not root.is_dir():
-        raise Exception("O caminho informado não representa um diretório válido.")
+        raise InvalidInputError(
+            f"O caminho '{path}' não representa um diretório existente."
+        )
 
-    click.echo(f"O diretório selecionado foi {root.absolute()}")
+    click.echo(f"O diretório selecionado foi: {root.absolute()}")
 
     # pesquisar arquivos
     files = process_search(path=root, key=key, value=value, recursive=recursive)
@@ -131,4 +136,9 @@ def finder(path, key, value, recursive, copy_to, save):
     copy_files(files=files, copy_to=copy_to)
 
 
-finder()
+if __name__ == "__main__":
+    try:
+        finder()
+
+    except FileFinderError as err:
+        click.echo(click.style(f"❌ {err}", bg="black", fg="red", italic=True))
